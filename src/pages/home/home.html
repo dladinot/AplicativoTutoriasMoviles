@@ -1,10 +1,3 @@
-<div id="custom-overlay" [style.display]="splash ? 'flex': 'none'">
-  <div class="flb">
-    <div class="Aligner-item Aligner-item--top"></div>
-    <img src="../../assets/img/Untitled design.png">
-    <div class="Aligner-item Aligner-item--bottom"></div>
-  </div>
-</div>
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -15,11 +8,39 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
+  <div text-center>
+  <h3>¡Bienvenido!</h3>
   <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
+    ¿Necesitas ayuda en alguna materia?
   </p>
+  <img class="imagen" src="assets/img/dudas.png" />
+  </div>
+  <p>
+    Selecciona la asignatura para encontrar tutores:
+  </p>
+  <ion-item>
+    <ion-label>Asignatura</ion-label>
+    <ion-select [(ngModel)]="asignatura">
+      <ion-option value="alg">Álgebra</ion-option>
+      <ion-option value="calc">Cálculo</ion-option>
+      <ion-option value="cplx">Variable compleja</ion-option>
+      <ion-option value="trig">Trigonometría</ion-option>
+      <ion-option value="vect">Vectorial</ion-option>
+      <ion-option value="ling">Linguística</ion-option>
+      <ion-option value="ing">Inglés</ion-option>
+      <ion-option value="econ">Economía</ion-option>
+      <ion-option value="fis">Física</ion-option>
+      <ion-option value="geom">Geometría</ion-option>
+      <ion-option value="geog">Geografía</ion-option>
+      <ion-option value="hist">Historia</ion-option>
+      <ion-option value="bio">Biología</ion-option>
+      <ion-option value="quim">Química</ion-option>
+      <ion-option value="infor">Informática</ion-option>
+    </ion-select>
+  </ion-item>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <div text-center>
+  <button ion-button round>Buscar tutor</button>
+  </div>
+
 </ion-content>
