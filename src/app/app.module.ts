@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import {PerfilPage} from '../pages/perfil/perfil';
 import {AyudaPage} from '../pages/ayuda/ayuda';
 import {TransaccionesPage} from '../pages/transacciones/transacciones';
+import {RegistroPage} from '../pages/registro/registro';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +18,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     PerfilPage,
     AyudaPage,
-    TransaccionesPage
+    TransaccionesPage,
+    RegistroPage
 
   ],
   imports: [
@@ -30,7 +32,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     PerfilPage,
     AyudaPage,
-    TransaccionesPage
+    TransaccionesPage,
+    RegistroPage
 
   ],
   providers: [

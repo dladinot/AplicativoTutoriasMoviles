@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+      <ion-title>Registro</ion-title>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <ion-list>
+            <ion-title>Registrate</ion-title>
+            <ion-item>
+              <ion-label color="dark" floating>Nombre</ion-label>
+              <ion-input clearInput></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" floating>Apellidos</ion-label>
+              <ion-input clearInput></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" floating>C.C / T.I</ion-label>
+              <ion-input clearInput></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" floating>Correo Electronico</ion-label>
+              <ion-input type="email"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" floating>Contraseña</ion-label>
+              <ion-input type="password"></ion-input>
+            </ion-item>
+            <br>
+            <ion-item>
+              <ion-label color="dark">Fecha de Nacimiento</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" min="1900-01-01" max="2020-10-31"
+              pickerFormat="DD MM YYYY"  [(ngModel)]="myDate">
+              </ion-datetime>
+            </ion-item>
+            <br>
+            <button ion-button round outline color="primary">
+              <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+                Registrarse
+            </button>
+          </ion-list>
+      </ion-col>
+      <ion-col>
+        <ion-list>
+          <ion-title>¿Ya tienes Cuenta? </ion-title>
+          <ion-item>
+            <ion-label color="dark" floating>Nick Name</ion-label>
+            <ion-input clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="dark" floating>Contraseña</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-list>
+        <br>
+        <button ion-button round color="secondary" icon-start>
+          <ion-icon name="log-in"></ion-icon>
+          Login
+        </button>
+        <button ion-button round color="danger" icon-start>
+          <ion-icon name="logo-googleplus"></ion-icon>
+          Google
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <button ion-button round  color="danger">
+        <ion-icon ios="ios-exit" md="md-exit"></ion-icon>
+        Salir
+    </button>
+  </ion-grid>
+
+
+
+</ion-content>
