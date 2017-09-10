@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController,AlertController ,NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
-
+import { LoginPage } from '../login/login';
 import { UserModel } from '../../models/user-model';
 
 
@@ -37,7 +37,8 @@ export class RegistroPage {
         this.authService.createUserWithEmailAndPassword(this.userModel).then(result => {
             loading.dismiss();
 
-            //this.navCtrl.push(SignInPage);
+            this.navCtrl.push(LoginPage);
+            this.alert('Información','Registro exitoso, ahora puede iniciar sesión');
             console.log('Registro ok');
         }).catch(error => {
             loading.dismiss();

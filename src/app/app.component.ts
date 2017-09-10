@@ -25,11 +25,13 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public authService: AuthService) {
-      if (authService.authenticated) {
+      //mantiene sesion iniciada, hay un problema y es que siempre la mantiene iniciada
+      /*if (authService.authenticated) {
             this.rootPage = LoginPage;
         } else {
             this.rootPage = HomePage;
         }
+        */
     this.initializeApp();
 
     // used for an example of ngFor and navigation
