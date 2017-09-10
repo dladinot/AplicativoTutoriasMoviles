@@ -1,16 +1,16 @@
-
-<<ion-header>
-    <ion-navbar>
-        <ion-title>Registro</ion-title>
+<ion-header>
+    <ion-navbar hideBackButton="true">
+        <ion-title>Iniciar Sesión</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
   <div text-center>
-  <h3>Empecemos creando una cuenta</h3>
-  <img class="imagen" src="assets/img/icon-account.png" />
+  <h3>¿Tienes problemas con alguna asignatura?</h3>
+  <h3>¡Empieza cuanto antes!</h3>
+  <img class="imagen" src="assets/img/tutor.png" />
   </div>
-    <form #signUpForm="ngForm" (submit)="signUp()">
+    <form #signInForm="ngForm" (submit)="signIn()">
         <ion-list>
             <ion-item>
                 <ion-label stacked>Correo electrónico</ion-label>
@@ -24,7 +24,11 @@
             </ion-item>
 
             <div padding-left padding-right padding-top>
-                <button ion-button [disabled]="!signUpForm.form.valid" block>Registrarse</button>
+                <button ion-button [disabled]="!signInForm.form.valid" block>Entrar</button>
+            </div>
+
+            <div padding-left padding-right>
+                <p>&iquest;Aún no te has registrado? <a (click)="signUp()">Regístrate aquí</a>
             </div>
         </ion-list>
     </form>
