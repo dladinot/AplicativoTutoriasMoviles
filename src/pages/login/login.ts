@@ -18,6 +18,7 @@ import { HomePage } from '../home/home';
 })
 export class LoginPage {
   userModel: UserModel;
+  splash = true;
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
@@ -59,7 +60,9 @@ export class LoginPage {
         }
 
   ionViewDidLoad() {
+    setTimeout(() => this.splash = false, 4000);
     console.log('ionViewDidLoad LoginPage');
   }
+
 
 }
