@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-
+import {EditarPerfil} from '../../models/perfil';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
+import {AngularFireAuth}  from 'angularfire2/auth';
+import { EditarPerfilPage } from '../editar-perfil/editar-perfil';
 /**
  * Generated class for the PerfilPage page.
  *
@@ -15,15 +18,27 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'perfil.html',
 })
 export class PerfilPage {
+  //o EditarPerfil
+  infoPerfil: FirebaseObjectObservable<EditarPerfil>
 
   testCheckboxOpen: boolean;
   testCheckboxResult;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(
+    private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
+    public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  }
+
+  irEditarPerfil(){
+    this.navCtrl.push(EditarPerfilPage);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilPage');
+    this.afAuth.authState.take(1).subscribe(data =>{
+      this.infoPerfil = this.afDatabase.object(`perfil/${data.uid}`)
+    })
+
   }
 
   showCheckbox() {

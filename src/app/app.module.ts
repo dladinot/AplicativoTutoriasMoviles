@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
+import { EditarPerfilPage } from '../pages/editar-perfil/editar-perfil';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {PerfilPage} from '../pages/perfil/perfil';
@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../providers/auth-service';
+import {AngularFireDatabaseModule}  from 'angularfire2/database';
 export const firebaseConfig = {
     apiKey: "AIzaSyBlMBzpnfMKx1ebPOCrw9VkITQSzU_2RSU",
     authDomain: "tutoriasmoviles.firebaseapp.com",
@@ -31,14 +32,16 @@ export const firebaseConfig = {
     AyudaPage,
     TransaccionesPage,
     RegistroPage,
-    LoginPage
+    LoginPage,
+    EditarPerfilPage
 
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +51,8 @@ export const firebaseConfig = {
     AyudaPage,
     TransaccionesPage,
     RegistroPage,
-    LoginPage
+    LoginPage,
+    EditarPerfilPage
 
   ],
   providers: [
