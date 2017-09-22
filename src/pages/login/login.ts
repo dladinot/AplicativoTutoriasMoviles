@@ -4,6 +4,10 @@ import { AuthService } from '../../providers/auth-service';
 import { UserModel } from '../../models/user-model';
 import { RegistroPage } from '../registro/registro';
 import { HomePage } from '../home/home';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
+import {AngularFireAuth}  from 'angularfire2/auth';
+import {CrearPerfil} from '../../models/perfil';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -17,9 +21,13 @@ import { HomePage } from '../home/home';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  //infoPerfil: FirebaseObjectObservable<CrearPerfil>
+
   userModel: UserModel;
   splash = true;
   constructor(
+    private afAuth: AngularFireAuth,
+    private afDatabase:AngularFireDatabase,
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
@@ -36,7 +44,10 @@ export class LoginPage {
 
     this.authService.signInWithEmailAndPassword(this.userModel).then(result => {
         loading.dismiss();
+        console.log(result.uid);
 
+        //take the user to the Homepage if he has a profile
+        //otherwise take him to ProfileCreation
         this.navCtrl.setRoot(HomePage);
     }).catch(error => {
         loading.dismiss();

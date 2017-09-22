@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { EditarPerfilPage } from '../pages/editar-perfil/editar-perfil';
+import { CrearPerfilPage } from '../pages/crear-perfil/crear-perfil';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {PerfilPage} from '../pages/perfil/perfil';
@@ -33,7 +33,7 @@ export const firebaseConfig = {
     TransaccionesPage,
     RegistroPage,
     LoginPage,
-    EditarPerfilPage
+    CrearPerfilPage
 
   ],
   imports: [
@@ -52,7 +52,7 @@ export const firebaseConfig = {
     TransaccionesPage,
     RegistroPage,
     LoginPage,
-    EditarPerfilPage
+    CrearPerfilPage
 
   ],
   providers: [

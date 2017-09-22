@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AngularFireAuth}  from 'angularfire2/auth';
-import {EditarPerfil} from '../../models/perfil';
+import {CrearPerfil} from '../../models/perfil';
 import {AngularFireDatabase} from 'angularfire2/database'
 import { HomePage } from '../home/home';
 
@@ -15,10 +15,10 @@ import { HomePage } from '../home/home';
 @IonicPage()
 @Component({
   selector: 'page-editar-perfil',
-  templateUrl: 'editar-perfil.html',
+  templateUrl: 'crear-perfil.html',
 })
-export class EditarPerfilPage {
-  perfil = {} as EditarPerfil;
+export class CrearPerfilPage {
+  perfil = {} as CrearPerfil;
 
   constructor(
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
@@ -27,7 +27,7 @@ export class EditarPerfilPage {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EditarPerfilPage');
+    console.log('ionViewDidLoad CrearPerfilPage');
   }
 
   crearPerfil(){
