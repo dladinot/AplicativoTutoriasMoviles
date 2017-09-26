@@ -4,7 +4,7 @@ import { AlertController } from 'ionic-angular';
 import {CrearPerfil} from '../../models/perfil';
 import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 import {AngularFireAuth}  from 'angularfire2/auth';
-import { CrearPerfilPage } from '../crear-perfil/crear-perfil';
+
 /**
  * Generated class for the PerfilPage page.
  *
@@ -19,6 +19,7 @@ import { CrearPerfilPage } from '../crear-perfil/crear-perfil';
 })
 export class PerfilPage {
   //o EditarPerfil
+  //algunos campos de crear perfil estan em models/perfil.ts
   infoPerfil: FirebaseObjectObservable<CrearPerfil>
 
   testCheckboxOpen: boolean;
@@ -30,7 +31,7 @@ export class PerfilPage {
   }
 
   irEditarPerfil(){
-    this.navCtrl.push(CrearPerfilPage);
+
   }
 
   ionViewDidLoad() {

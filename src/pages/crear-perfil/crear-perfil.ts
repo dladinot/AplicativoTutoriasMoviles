@@ -18,6 +18,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'crear-perfil.html',
 })
 export class CrearPerfilPage {
+  //OJO!! algunos campos de crear perfil estan em models/perfil.ts
   perfil = {} as CrearPerfil;
 
   constructor(

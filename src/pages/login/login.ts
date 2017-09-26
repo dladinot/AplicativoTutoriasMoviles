@@ -6,7 +6,9 @@ import { RegistroPage } from '../registro/registro';
 import { HomePage } from '../home/home';
 import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 import {AngularFireAuth}  from 'angularfire2/auth';
-import {CrearPerfil} from '../../models/perfil';
+import { CrearPerfilPage } from '../crear-perfil/crear-perfil';
+
+
 
 /**
  * Generated class for the LoginPage page.
@@ -21,7 +23,7 @@ import {CrearPerfil} from '../../models/perfil';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  //infoPerfil: FirebaseObjectObservable<CrearPerfil>
+  infoPerfil: FirebaseObjectObservable<any>
 
   userModel: UserModel;
   splash = true;
@@ -34,6 +36,7 @@ export class LoginPage {
     public authService: AuthService,
     public navParams: NavParams) {
     this.userModel = new UserModel();
+
   }
 
   signIn() {
@@ -46,9 +49,20 @@ export class LoginPage {
         loading.dismiss();
         console.log(result.uid);
 
-        //take the user to the Homepage if he has a profile
-        //otherwise take him to ProfileCreation
-        this.navCtrl.setRoot(HomePage);
+        //verifica si existe perfil creado o no
+        this.infoPerfil=this.afDatabase.object(`perfil/${result.uid}`,{preserveSnapshot:true})
+        this.infoPerfil.subscribe(snapshot => {
+        if(snapshot.exists()) {
+            this.navCtrl.setRoot(HomePage);
+            //console.log('existe')
+        } else {
+            //console.log('no existe')
+            this.navCtrl.setRoot(CrearPerfilPage);
+        }
+        });
+
+
+
     }).catch(error => {
         loading.dismiss();
 
