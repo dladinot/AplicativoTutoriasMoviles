@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController,LoadingController, AlertController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController,LoadingController, AlertController, NavParams, MenuController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
 import { UserModel } from '../../models/user-model';
 import { RegistroPage } from '../registro/registro';
@@ -34,7 +34,8 @@ export class LoginPage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public authService: AuthService,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public menu: MenuController) {
     this.userModel = new UserModel();
 
   }
@@ -88,6 +89,10 @@ export class LoginPage {
     setTimeout(() => this.splash = false, 4000);
     console.log('ionViewDidLoad LoginPage');
   }
-
-
+  ionViewDidEnter(){
+    this.menu.enable(false)
+  }
+  ionViewDidLeave(){
+    this.menu.enable(true)
+  }
 }

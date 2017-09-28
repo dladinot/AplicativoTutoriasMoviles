@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import {AngularFireAuth}  from 'angularfire2/auth';
 import {CrearPerfil} from '../../models/perfil';
+import { AuthService } from '../../providers/auth-service';
 import {AngularFireDatabase} from 'angularfire2/database'
 import { HomePage } from '../home/home';
 
@@ -20,24 +21,38 @@ import { HomePage } from '../home/home';
 export class CrearPerfilPage {
   //OJO!! algunos campos de crear perfil estan em models/perfil.ts
   perfil = {} as CrearPerfil;
+  verificar = false;
 
   constructor(
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
+    public alertCtrl: AlertController,public authService: AuthService,
     public navCtrl: NavController, public navParams: NavParams) {
   }
 
-
+  alert(title: string, message: string) {
+          let alert = this.alertCtrl.create({
+              title: title,
+              subTitle: message,
+              buttons: ['OK']
+          });
+          alert.present();
+      }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CrearPerfilPage');
   }
-
+  verificarCampos(){
+    if(this.perfil.nombre != ""){
+      this.verificar = true;
+      this.crearPerfil();
+    }
+    return this.verificar;
+  }
   crearPerfil(){
     this.afAuth.authState.take(1).subscribe(auth=>{
       this.afDatabase.object(`perfil/${auth.uid}`).set(this.perfil)
-      //mirar que hace cuando se crea el perfil la idea es que esta vista salga una sola vez en el login cuando el usuario no tiene datos de perfil
-        .then(()=>this.navCtrl.setRoot('HomePage'));
-
+        .then(()=>this.navCtrl.setRoot(HomePage));
+          this.navCtrl.setRoot(HomePage);
+          this.alert("Registro Exitoso",this.perfil.nombre);
     })
   }
-
 }
