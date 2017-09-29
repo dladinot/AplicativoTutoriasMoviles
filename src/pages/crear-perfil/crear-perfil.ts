@@ -21,7 +21,6 @@ import { HomePage } from '../home/home';
 export class CrearPerfilPage {
   //OJO!! algunos campos de crear perfil estan em models/perfil.ts
   perfil = {} as CrearPerfil;
-  verificar = false;
 
   constructor(
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
@@ -39,13 +38,6 @@ export class CrearPerfilPage {
       }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CrearPerfilPage');
-  }
-  verificarCampos(){
-    if(this.perfil.nombre != ""){
-      this.verificar = true;
-      this.crearPerfil();
-    }
-    return this.verificar;
   }
   crearPerfil(){
     this.afAuth.authState.take(1).subscribe(auth=>{

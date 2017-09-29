@@ -26,7 +26,6 @@ export class LoginPage {
   infoPerfil: FirebaseObjectObservable<any>
 
   userModel: UserModel;
-  splash = true;
   constructor(
     private afAuth: AngularFireAuth,
     private afDatabase:AngularFireDatabase,
@@ -86,7 +85,6 @@ export class LoginPage {
         }
 
   ionViewDidLoad() {
-    setTimeout(() => this.splash = false, 4000);
     console.log('ionViewDidLoad LoginPage');
   }
   ionViewDidEnter(){
