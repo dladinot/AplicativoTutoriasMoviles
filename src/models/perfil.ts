@@ -2,5 +2,6 @@ export interface CrearPerfil {
   username: string;
   nombre: string;
   apellido: string;
-  celular: string;
+  celular: Int16Array;
+  userSkype: string;
 }
