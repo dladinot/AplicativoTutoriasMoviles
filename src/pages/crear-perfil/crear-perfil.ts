@@ -41,6 +41,7 @@ export class CrearPerfilPage {
   }
   crearPerfil(){
     this.afAuth.authState.take(1).subscribe(auth=>{
+      this.perfil.disponible=false;
       this.afDatabase.object(`perfil/${auth.uid}`).set(this.perfil)
         .then(()=>this.navCtrl.setRoot(HomePage));
           this.navCtrl.setRoot(HomePage);

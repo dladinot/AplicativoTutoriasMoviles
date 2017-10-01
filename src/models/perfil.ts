@@ -4,4 +4,6 @@ export interface CrearPerfil {
   apellido: string;
   celular: Int16Array;
   userSkype: string;
+  disponible: boolean;
+  
 }

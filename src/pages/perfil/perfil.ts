@@ -20,97 +20,133 @@ import {AngularFireAuth}  from 'angularfire2/auth';
 export class PerfilPage {
   //o EditarPerfil
   //algunos campos de crear perfil estan em models/perfil.ts
-  infoPerfil: FirebaseObjectObservable<CrearPerfil>
-
+  infoPerfil: FirebaseObjectObservable<CrearPerfil>;
+  disponible: boolean;
   testCheckboxOpen: boolean;
   testCheckboxResult;
+  idUsuario;
 
   constructor(
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
     public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+
   }
 
   irEditarPerfil(){
-
+    console.log(this.disponible);
   }
 
+
   ionViewDidLoad() {
+
     console.log('ionViewDidLoad PerfilPage');
     this.afAuth.authState.take(1).subscribe(data =>{
-      this.infoPerfil = this.afDatabase.object(`perfil/${data.uid}`)
+      this.idUsuario=data.uid;
+      this.infoPerfil = this.afDatabase.object(`perfil/${this.idUsuario}`)
+      //subscribe obtiene info más especifica
+      this.infoPerfil.subscribe(snapshot => {
+        console.log(snapshot.disponible);
+        this.disponible=snapshot.disponible;
+        console.log(this.disponible);
+      });
+      //disponible tarda en cargarse por ello sale undefined primero y en unos segundos se asigna la variable
+      console.log(this.disponible);
+
     })
 
   }
+  notify(event)
+    {
+      if(event.checked){
+        this.disponible=false;
+        //ojo recarga la vista de nuevo
+        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(true).then(()=>this.navCtrl.push(PerfilPage));
+      }
+      else{
+        this.disponible=true;
+        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(false).then(()=>this.navCtrl.push(PerfilPage));
+
+      }
+    }
+    getDisponible(){
+      return this.disponible;
+    }
 
   showCheckbox() {
     let alert = this.alertCtrl.create();
-    alert.setTitle('¿En que asignaturas puede ofrecer asesoría?');
+    alert.setTitle('¿En que asignaturas puedes ofrecer asesoría?');
 
     alert.addInput({
       type: 'checkbox',
-      label: 'Matemática',
-      value: 'value1',
+      label: 'Algebra',
+      value: 'algebra',
       checked: true
     });
 
     alert.addInput({
       type: 'checkbox',
-      label: 'Linguística',
-      value: 'value2'
+      label: 'Trigonometría',
+      value: 'trigonometria'
     });
 
     alert.addInput({
       type: 'checkbox',
-      label: 'Informática',
-      value: 'value3'
+      label: 'Programación',
+      value: 'programacion'
     });
 
     alert.addInput({
       type: 'checkbox',
-      label: 'Ingles',
-      value: 'value4'
+      label: 'Inglés',
+      value: 'ingles'
     });
 
     alert.addInput({
       type: 'checkbox',
       label: 'Física',
-      value: 'value5'
+      value: 'fisica'
     });
 
     alert.addInput({
       type: 'checkbox',
       label: 'Geometría',
-      value: 'value6'
+      value: 'geometria'
     });
 
     alert.addInput({
       type: 'checkbox',
-      label: 'Geografía',
-      value: 'value7'
+      label: 'Estadística',
+      value: 'estadistica'
     });
 
     alert.addInput({
       type: 'checkbox',
-      label: 'Historia',
-      value: 'value8'
+      label: 'Ecuaciones diferenciales',
+      value: 'ecuaciones'
     });
 
     alert.addInput({
       type: 'checkbox',
       label: 'Química',
-      value: 'value9'
+      value: 'quimica'
     });
 
     alert.addInput({
       type: 'checkbox',
       label: 'Biología',
-      value: 'value10'
+      value: 'biologia'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Probabilidad',
+      value: 'probabilidad'
     });
 
     alert.addInput({
       type: 'checkbox',
       label: 'Economía',
-      value: 'value11'
+      value: 'economia'
     });
 
     alert.addButton('Cancelar');
@@ -118,6 +154,8 @@ export class PerfilPage {
       text: 'Confirmar',
       handler: data => {
         console.log('Checkbox data:', data);
+        //destruye la vista actual y toca volver a cargarla
+        this.afDatabase.object(`perfil/${this.idUsuario}/asignaturas`).set(data).then(()=>this.navCtrl.push(PerfilPage));
         this.testCheckboxOpen = false;
         this.testCheckboxResult = data;
       }

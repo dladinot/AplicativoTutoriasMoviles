@@ -24,17 +24,17 @@
       <h2>Nombre Usuario: {{(infoPerfil | async)?.username}}</h2>
       <p>{{(infoPerfil | async)?.nombre}} {{(infoPerfil | async)?.apellido}}</p>
       <p>{{(infoPerfil | async)?.celular}}</p>
-      <!--<p>Info 3</p>-->
-      <!--
+      <p>Info 3</p>
+
       <button ion-button clear item-end (click)="irEditarPerfil()">Editar</button>
-      //-->
+
 
   </ion-item>
-  <button ion-button block color="blue" (click)="showCheckbox()">Asignaturas asesoría</button>
   <ion-item>
       <ion-label>Diponibilidad tutoría</ion-label>
-      <ion-toggle color="energized"></ion-toggle>
+      <ion-toggle checked="getDisponible()" color="energized"  (ionChange)="notify($event)"></ion-toggle>
   </ion-item>
+  <button ion-button block [disabled]="getDisponible()"color="blue" (click)="showCheckbox()">Asignaturas asesoría</button>
 
 
 
