@@ -21,7 +21,7 @@ export class PerfilPage {
   //o EditarPerfil
   //algunos campos de crear perfil estan em models/perfil.ts
   infoPerfil: FirebaseObjectObservable<CrearPerfil>;
-  disponible: boolean;
+  public disponible: boolean;
   testCheckboxOpen: boolean;
   testCheckboxResult;
   idUsuario;
@@ -33,43 +33,49 @@ export class PerfilPage {
   }
 
   irEditarPerfil(){
-    console.log(this.disponible);
+    return this.disponible;
+
+  }
+
+  ionViewWillLoad(){
+    this.afAuth.authState.take(1).subscribe(data =>{
+      this.idUsuario=data.uid;
+      this.infoPerfil = this.afDatabase.object(`perfil/${this.idUsuario}`)
+      //subscribe obtiene info más especifica
+      this.infoPerfil.subscribe(snapshot => {
+
+        this.disponible=snapshot.disponible;
+
+      });
+      //disponible tarda en cargarse por ello sale undefined primero y en unos segundos se asigna la variable
+
+    })
+
+
   }
 
 
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad PerfilPage');
-    this.afAuth.authState.take(1).subscribe(data =>{
-      this.idUsuario=data.uid;
-      this.infoPerfil = this.afDatabase.object(`perfil/${this.idUsuario}`)
-      //subscribe obtiene info más especifica
-      this.infoPerfil.subscribe(snapshot => {
-        console.log(snapshot.disponible);
-        this.disponible=snapshot.disponible;
-        console.log(this.disponible);
-      });
-      //disponible tarda en cargarse por ello sale undefined primero y en unos segundos se asigna la variable
-      console.log(this.disponible);
-
-    })
+    
 
   }
   notify(event)
     {
       if(event.checked){
-        this.disponible=false;
+        this.disponible=true;
         //ojo recarga la vista de nuevo
-        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(true).then(()=>this.navCtrl.push(PerfilPage));
+        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(true);
       }
       else{
-        this.disponible=true;
-        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(false).then(()=>this.navCtrl.push(PerfilPage));
+        this.disponible=false;
+        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(false);
 
       }
     }
     getDisponible(){
-      return this.disponible;
+      return !this.disponible;
     }
 
   showCheckbox() {
