@@ -44,7 +44,6 @@ export class CrearPerfilPage {
       this.perfil.disponible=false;
       this.afDatabase.object(`perfil/${auth.uid}`).set(this.perfil)
         .then(()=>this.navCtrl.setRoot(HomePage));
-          this.navCtrl.setRoot(HomePage);
           this.alert("Registro Exitoso",this.perfil.nombre);
     })
   }

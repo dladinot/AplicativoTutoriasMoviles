@@ -32,7 +32,7 @@
   </ion-item>
   <ion-item>
       <ion-label>Diponibilidad tutoría</ion-label>
-      <ion-toggle [checked]="disponible" color="energized" (ionChange)="notify($event)"></ion-toggle>
+      <ion-toggle [checked]="disponible" color="energized"  (ionChange)="notify($event)"></ion-toggle>
   </ion-item>
   <button ion-button block [disabled]="getDisponible()"color="blue" (click)="showCheckbox()">Asignaturas asesoría</button>
 

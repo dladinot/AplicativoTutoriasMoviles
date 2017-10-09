@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular';
 import {CrearPerfil} from '../../models/perfil';
 import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 import {AngularFireAuth}  from 'angularfire2/auth';
+import {UsuarioProvider} from '../../providers/usuario/usuario';
 
 /**
  * Generated class for the PerfilPage page.
@@ -28,12 +29,14 @@ export class PerfilPage {
 
   constructor(
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
+    public usp: UsuarioProvider,
     public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
   }
 
   irEditarPerfil(){
-    return this.disponible;
+
+    this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(true);
 
   }
 
@@ -161,7 +164,8 @@ export class PerfilPage {
       handler: data => {
         console.log('Checkbox data:', data);
         //destruye la vista actual y toca volver a cargarla
-        this.afDatabase.object(`perfil/${this.idUsuario}/asignaturas`).set(data).then(()=>this.navCtrl.push(PerfilPage));
+        //this.afDatabase.object(`perfil/${this.idUsuario}/asignaturas`).set(data).then(()=>this.navCtrl.push(PerfilPage));
+        this.usp.setAsignaturas(this.idUsuario,data);
         this.testCheckboxOpen = false;
         this.testCheckboxResult = data;
       }

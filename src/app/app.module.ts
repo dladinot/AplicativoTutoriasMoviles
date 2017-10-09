@@ -15,6 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../providers/auth-service';
 import {AngularFireDatabaseModule}  from 'angularfire2/database';
+import { UsuarioProvider } from '../providers/usuario/usuario';
 export const firebaseConfig = {
     apiKey: "AIzaSyBlMBzpnfMKx1ebPOCrw9VkITQSzU_2RSU",
     authDomain: "tutoriasmoviles.firebaseapp.com",
@@ -59,7 +60,9 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    UsuarioProvider,
+    UsuarioProvider
   ]
 })
 export class AppModule {}
