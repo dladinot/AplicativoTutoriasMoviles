@@ -1,46 +1,44 @@
+
 <ion-header>
+
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>Home</ion-title>
   </ion-navbar>
+
 </ion-header>
+
 
 <ion-content padding>
   <div text-center>
-  <h3>¡Bienvenido!</h3>
-  <p>
-    ¿Necesitas ayuda en alguna materia?
-  </p>
-  <img class="imagen" src="assets/img/dudas.png" />
-  </div>
-  <p>
-    Selecciona la asignatura para encontrar tutores:
-  </p>
-  <ion-item>
-    <ion-label>Asignatura</ion-label>
-    <ion-select [(ngModel)]="asignatura">
-      <ion-option value="alg">Álgebra</ion-option>
-      <ion-option value="calc">Cálculo</ion-option>
-      <ion-option value="cplx">Variable compleja</ion-option>
-      <ion-option value="trig">Trigonometría</ion-option>
-      <ion-option value="vect">Vectorial</ion-option>
-      <ion-option value="ling">Linguística</ion-option>
-      <ion-option value="ing">Inglés</ion-option>
-      <ion-option value="econ">Economía</ion-option>
-      <ion-option value="fis">Física</ion-option>
-      <ion-option value="geom">Geometría</ion-option>
-      <ion-option value="geog">Geografía</ion-option>
-      <ion-option value="hist">Historia</ion-option>
-      <ion-option value="bio">Biología</ion-option>
-      <ion-option value="quim">Química</ion-option>
-      <ion-option value="infor">Informática</ion-option>
-    </ion-select>
-  </ion-item>
+    <h3>¡Bienvenido!</h3>
+    <p>
+      ¿Necesitas ayuda en alguna materia?
+    </p>
+    <img class="imagen" src="assets/img/dudas.png" />
+    </div>
+    <p>
+      Selecciona la asignatura para encontrar tutores:
+    </p>
+    <ion-item>
+      <ion-label>Asignatura</ion-label>
+      <ion-select [(ngModel)]="asignatura">
+        <ion-option value="alg">Álgebra</ion-option>
+        <ion-option value="calc">Trigonometría</ion-option>
+        <ion-option value="cplx">Programación</ion-option>
+        <ion-option value="trig">Inglés</ion-option>
+        <ion-option value="vect">Física</ion-option>
+        <ion-option value="ling">Geometría</ion-option>
+        <ion-option value="ing">Estadística</ion-option>
+        <ion-option value="econ">Ecuaciones diferenciales</ion-option>
+        <ion-option value="fis">Química</ion-option>
+        <ion-option value="geom">Biología</ion-option>
+        <ion-option value="geog">Probabilidad</ion-option>
+        <ion-option value="hist">Economía</ion-option>
+      </ion-select>
+    </ion-item>
 
-  <div text-center>
-  <button ion-button round>Buscar tutor</button>
-  </div>
+    <div text-center>
+    <button ion-button round>Buscar tutor</button>
+    </div>
 
 </ion-content>

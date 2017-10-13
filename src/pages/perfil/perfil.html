@@ -1,13 +1,6 @@
-<!--
-  Generated template for the PerfilPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <button ion-button menuToggle>
+  <ion-navbar color="emerald">
+    <button ion-button menuToggle="">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Perfil</ion-title>
@@ -18,24 +11,25 @@
 
 <ion-content padding>
   <ion-item>
-      <ion-thumbnail item-start>
-        <img src="assets/img/avatar.png">
-      </ion-thumbnail>
-      <h2>Nombre Usuario: {{(infoPerfil | async)?.username}}</h2>
-      <p>{{(infoPerfil | async)?.nombre}} {{(infoPerfil | async)?.apellido}}</p>
-      <p>{{(infoPerfil | async)?.celular}}</p>
-      <p>Info 3</p>
-
-      <button ion-button clear item-end (click)="irEditarPerfil()">Editar</button>
-
-
+    <ion-label fixed color="mBlue">Nombres</ion-label>
+    <ion-input disabled={{boolInputs}} type="text" value="{{firstName}}" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed color="mBlue">Apellidos</ion-label>
+    <ion-input disabled={{boolInputs}} type="text" value="{{lastName}}" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed color="mBlue">Telefono</ion-label>
+    <ion-input disabled={{boolInputs}} type="text" value="{{phoneNumber}}" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed color="mBlue">Skype ID</ion-label>
+    <ion-input disabled={{boolInputs}} type="text" value="{{skypeUser}}" ></ion-input>
   </ion-item>
   <ion-item>
       <ion-label>Diponibilidad tutoría</ion-label>
-      <ion-toggle [checked]="disponible" color="energized"  (ionChange)="notify($event)"></ion-toggle>
+      <ion-toggle [checked]="disponible" color="energized" (ionChange)="notify($event)"></ion-toggle>
   </ion-item>
   <button ion-button block [disabled]="getDisponible()"color="blue" (click)="showCheckbox()">Asignaturas asesoría</button>
-
-
-
+  <button [class.hide]="boolButton2" ion-button block (click)="updateProfile()">Editar</button>
 </ion-content>

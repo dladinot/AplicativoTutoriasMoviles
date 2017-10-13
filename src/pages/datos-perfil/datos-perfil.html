@@ -1,0 +1,35 @@
+
+<ion-header>
+
+  <ion-navbar color="mBlue">
+    <ion-title>Información básica</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1 class="titulo">
+    <img src="../../assets/icon/Img3-150px.png" alt=""><br/>
+    Estas a un paso de hacer parte de la comunidad de TutoriasMoviles, 
+    completa tu información de perfil:</h1>
+  <ion-item>
+    <ion-label color="greenSea">Nombre:</ion-label>
+    <ion-input [(ngModel)]="profile.firstName"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label color="greenSea">Apellido:</ion-label>
+      <ion-input [(ngModel)]="profile.lastName"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label color="greenSea">Telefono:</ion-label>
+      <ion-input [(ngModel)]="profile.phoneNumber"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label color="greenSea">Skype ID:</ion-label>
+      <ion-input [(ngModel)]="profile.skypeUser"></ion-input>
+  </ion-item>
+
+  <button ion-button block (click)="createProfile()">Confirmar</button>
+
+</ion-content>

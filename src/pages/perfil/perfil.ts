@@ -1,17 +1,9 @@
+import { Profile } from '../../models/profile';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
-import {CrearPerfil} from '../../models/perfil';
-import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
-import {AngularFireAuth}  from 'angularfire2/auth';
-import {UsuarioProvider} from '../../providers/usuario/usuario';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
-/**
- * Generated class for the PerfilPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -19,61 +11,77 @@ import {UsuarioProvider} from '../../providers/usuario/usuario';
   templateUrl: 'perfil.html',
 })
 export class PerfilPage {
-  //o EditarPerfil
-  //algunos campos de crear perfil estan em models/perfil.ts
-  infoPerfil: FirebaseObjectObservable<CrearPerfil>;
-  public disponible: boolean;
+
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  skypeUser: string;
+  profile = {} as Profile;
+  previusProfile = {} as Profile;
+  profileData: FirebaseObjectObservable<Profile>
+  boolInputs: boolean;
+  boolButton: boolean;
+  boolButton2: boolean;
   testCheckboxOpen: boolean;
   testCheckboxResult;
-  idUsuario;
+  public disponible: boolean;
 
-  constructor(
-    private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase,
-    public usp: UsuarioProvider,
-    public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
+    public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams) {
+      this.boolInputs = true;
+      this.boolButton = false;
+      this.boolButton = false;
+      this.afAuth.authState.subscribe(data => {
+        this.profileData = this.afDatabase.object(`profile/${data.uid}`, {preserveSnapshot: true});
+        this.profileData.subscribe(data => {
+          this.setData(data);
+        })
+
+      })
+
 
   }
-
-  irEditarPerfil(){
-
-    this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(true);
-
-  }
-
   ionViewWillLoad(){
-    this.afAuth.authState.take(1).subscribe(data =>{
-      this.idUsuario=data.uid;
-      this.infoPerfil = this.afDatabase.object(`perfil/${this.idUsuario}`)
-      //subscribe obtiene info más especifica
-      this.infoPerfil.subscribe(snapshot => {
+  this.afAuth.authState.take(1).subscribe(data =>{
+    this.profileData = this.afDatabase.object(`profile/${data.uid}`)
+    //subscribe obtiene info más especifica
+    this.profileData.subscribe(snapshot => {
 
-        this.disponible=snapshot.disponible;
+      this.disponible=snapshot.disponible;
 
-      });
-      //disponible tarda en cargarse por ello sale undefined primero y en unos segundos se asigna la variable
+    });
+    //disponible tarda en cargarse por ello sale undefined primero y en unos segundos se asigna la variable
 
-    })
+  })
 
 
-  }
+}
 
 
   ionViewDidLoad() {
-
     console.log('ionViewDidLoad PerfilPage');
+  }
 
-
+  setData(data) {
+    this.firstName = data.val().firstName;
+    this.lastName = data.val().lastName;
+    this.phoneNumber = data.val().phoneNumber;
+    this.skypeUser = data.val().skypeUser;
   }
   notify(event)
     {
       if(event.checked){
         this.disponible=true;
-        //ojo recarga la vista de nuevo
-        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(true);
+        this.afAuth.authState.take(1).subscribe(auth => {
+          this.afDatabase.object(`profile/${auth.uid}/disponible`).set(true);
+        });
       }
       else{
         this.disponible=false;
-        this.afDatabase.object(`perfil/${this.idUsuario}/disponible`).set(false);
+        this.afAuth.authState.take(1).subscribe(auth => {
+          this.profile.boolLogin = true;
+          this.afDatabase.object(`profile/${auth.uid}/disponible`).set(false);
+        });
 
       }
     }
@@ -81,6 +89,24 @@ export class PerfilPage {
       return !this.disponible;
     }
 
+
+
+  updateProfile() {
+    this.afAuth.authState.take(1).subscribe(auth => {
+      this.profile.boolLogin = true;
+      this.afDatabase.object(`profile/${auth.uid}/disponible`).set(true);
+
+      /*.then(
+        () => this.navCtrl.setRoot('HomePage')
+      )*/
+    });
+  }
+
+  enableInputs() {
+    this.boolInputs = false;
+    this.boolButton2 = false;
+    this.boolButton = true;
+  }
   showCheckbox() {
     let alert = this.alertCtrl.create();
     alert.setTitle('¿En que asignaturas puedes ofrecer asesoría?');
@@ -164,8 +190,9 @@ export class PerfilPage {
       handler: data => {
         console.log('Checkbox data:', data);
         //destruye la vista actual y toca volver a cargarla
-        //this.afDatabase.object(`perfil/${this.idUsuario}/asignaturas`).set(data).then(()=>this.navCtrl.push(PerfilPage));
-        this.usp.setAsignaturas(this.idUsuario,data);
+        this.afAuth.authState.take(1).subscribe(auth => {
+          this.afDatabase.object(`profile/${auth.uid}/asignaturas`).set(data);
+        });
         this.testCheckboxOpen = false;
         this.testCheckboxResult = data;
       }

@@ -1,17 +1,10 @@
+import { User } from '../../models/user';
+import { Profile } from '../../models/profile';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController,AlertController ,NavParams, MenuController } from 'ionic-angular';
-import { AuthService } from '../../providers/auth-service';
-import { LoginPage } from '../login/login';
-import { UserModel } from '../../models/user-model';
-
-
-
-/**
- * Generated class for the RegistroPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { InicioPage } from '../inicio/inicio';
 
 @IonicPage()
 @Component({
@@ -19,52 +12,47 @@ import { UserModel } from '../../models/user-model';
   templateUrl: 'registro.html',
 })
 export class RegistroPage {
-  userModel: UserModel;
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
-    public authService: AuthService,
-    public menu: MenuController) {
-    this.userModel = new UserModel();
+
+  user = {} as User;
+  profile = {} as Profile;
+
+  constructor(private afAuth: AngularFireAuth, public loadingCtrl: LoadingController,
+    public events: Events, private afDataBase: AngularFireDatabase,
+    public navCtrl: NavController, public navParams: NavParams) {
   }
-  signUp() {
-        let loading = this.loadingCtrl.create({
-            content: 'Creando cuenta. Por favor, espere...'
-        });
-        loading.present();
-
-        this.authService.createUserWithEmailAndPassword(this.userModel).then(result => {
-            loading.dismiss();
-
-            this.navCtrl.push(LoginPage);
-            this.alert('Información','Registro exitoso, ahora puede iniciar sesión');
-            console.log('Registro ok');
-        }).catch(error => {
-            loading.dismiss();
-
-            console.log(error);
-            this.alert('Error', 'Ha ocurrido un error inesperado. Por favor intente nuevamente.');
-        });
-    }
-    alert(title: string, message: string) {
-        let alert = this.alertCtrl.create({
-            title: title,
-            subTitle: message,
-            buttons: ['OK']
-        });
-        alert.present();
-    }
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistroPage');
   }
-  ionViewDidEnter(){
-    this.menu.enable(false)
-  }
-  ionViewDidLeave(){
-    this.menu.enable(true)
-  }
+
+  async register(user: User){
+    try {      
+      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+      //console.log(result);
+      let loader = this.loadingCtrl.create({
+        content: 'Registrándo...',
+        duration: 2500        
+      });
+      ///////////////////%%%%%%%%%%%%%%%%%%%%%%%%%%%%QUEDE ACA 3/10
+      loader.present();
+      loader.onDidDismiss(() => {
+        //After duration time. boolLogin first login.
+        this.profile.boolLogin = false;
+        this.afAuth.authState.take(1).subscribe(auth => {
+          this.afDataBase.object(`profile/${auth.uid}`).set(this.profile)
+        })
+        this.navCtrl.push('InicioPage');
+        this.events.publish('showConfirmation');
+      });
+    }catch(e) {
+      //console.error(e);
+      let loader = this.loadingCtrl.create({
+        spinner: 'hide',
+        content: e,
+        duration: 3000
+      });
+      loader.present();
+    }
+  }  
+  
 }
