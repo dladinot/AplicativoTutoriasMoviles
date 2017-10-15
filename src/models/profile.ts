@@ -5,4 +5,6 @@ export interface Profile {
     skypeUser: string;
     boolLogin: boolean;
     disponible:boolean;
+    ciudad:string;
+    profesion:string;
 }

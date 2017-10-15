@@ -22,23 +22,23 @@
     <ion-item>
       <ion-label>Asignatura</ion-label>
       <ion-select [(ngModel)]="asignatura">
-        <ion-option value="alg">Álgebra</ion-option>
-        <ion-option value="calc">Trigonometría</ion-option>
-        <ion-option value="cplx">Programación</ion-option>
-        <ion-option value="trig">Inglés</ion-option>
-        <ion-option value="vect">Física</ion-option>
-        <ion-option value="ling">Geometría</ion-option>
-        <ion-option value="ing">Estadística</ion-option>
-        <ion-option value="econ">Ecuaciones diferenciales</ion-option>
-        <ion-option value="fis">Química</ion-option>
-        <ion-option value="geom">Biología</ion-option>
-        <ion-option value="geog">Probabilidad</ion-option>
-        <ion-option value="hist">Economía</ion-option>
+        <ion-option value="algebra">Álgebra</ion-option>
+        <ion-option value="trigonometria">Trigonometría</ion-option>
+        <ion-option value="programacion">Programación</ion-option>
+        <ion-option value="ingles">Inglés</ion-option>
+        <ion-option value="fisica">Física</ion-option>
+        <ion-option value="geometria">Geometría</ion-option>
+        <ion-option value="estadistica">Estadística</ion-option>
+        <ion-option value="ecuaciones">Ecuaciones diferenciales</ion-option>
+        <ion-option value="quimica">Química</ion-option>
+        <ion-option value="biologia">Biología</ion-option>
+        <ion-option value="probabilidad">Probabilidad</ion-option>
+        <ion-option value="economia">Economía</ion-option>
       </ion-select>
     </ion-item>
 
     <div text-center>
-    <button ion-button round>Buscar tutor</button>
+    <button ion-button round (click)="buscarTutor()">Buscar tutor</button>
     </div>
 
 </ion-content>

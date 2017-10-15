@@ -19,6 +19,14 @@
     <ion-input disabled={{boolInputs}} type="text" value="{{lastName}}" ></ion-input>
   </ion-item>
   <ion-item>
+    <ion-label fixed color="mBlue">Ciudad</ion-label>
+    <ion-input disabled={{boolInputs}} type="text" value="{{ciudad}}" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed color="mBlue">Profesión</ion-label>
+    <ion-input disabled={{boolInputs}} type="text" value="{{profesion}}" ></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label fixed color="mBlue">Telefono</ion-label>
     <ion-input disabled={{boolInputs}} type="text" value="{{phoneNumber}}" ></ion-input>
   </ion-item>
@@ -30,6 +38,7 @@
       <ion-label>Diponibilidad tutoría</ion-label>
       <ion-toggle [checked]="disponible" color="energized" (ionChange)="notify($event)"></ion-toggle>
   </ion-item>
-  <button ion-button block [disabled]="getDisponible()"color="blue" (click)="showCheckbox()">Asignaturas asesoría</button>
   <button [class.hide]="boolButton2" ion-button block (click)="updateProfile()">Editar</button>
+  <button ion-button block [disabled]="getDisponible()"color="blue" (click)="showCheckbox()">Asignaturas tutoría</button>
+
 </ion-content>

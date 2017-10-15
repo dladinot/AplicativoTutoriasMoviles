@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, Nav } from 'ionic-angular';
 import { AngularFireAuth} from 'angularfire2/auth';
-
+import { BuscarTutorPage } from "../buscar-tutor/buscar-tutor";
 import { InicioPage } from "../inicio/inicio";
 import { PerfilPage } from "../perfil/perfil";
 
@@ -10,8 +10,10 @@ import { PerfilPage } from "../perfil/perfil";
   selector: 'page-home',
   templateUrl: 'home.html',
 })
-export class HomePage {  
-  
+export class HomePage {
+
+  asignatura:string;
+
   constructor(private afAuth: AngularFireAuth,private toast: ToastController,
      public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -30,8 +32,14 @@ export class HomePage {
           duration: 3000
         }).present();
       }
-      
+
     });
+  }
+
+  buscarTutor(){
+    console.log(this.asignatura);
+    this.navCtrl.push(BuscarTutorPage,{asignatura:this.asignatura});
+
   }
 
 }

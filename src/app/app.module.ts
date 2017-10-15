@@ -9,11 +9,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicPageModule } from 'ionic-angular';
-
+import { BuscarTutorPageModule } from '../pages/buscar-tutor/buscar-tutor.module';
 import { MyApp } from './app.component';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     InicioPageModule,
     PerfilPageModule,
     LoginPageModule,
-    HomePageModule
+    HomePageModule,
+    BuscarTutorPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

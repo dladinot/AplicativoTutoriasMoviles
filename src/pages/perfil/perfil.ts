@@ -15,6 +15,8 @@ export class PerfilPage {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  ciudad: string;
+  profesion: string;
   skypeUser: string;
   profile = {} as Profile;
   previusProfile = {} as Profile;
@@ -31,6 +33,7 @@ export class PerfilPage {
       this.boolInputs = true;
       this.boolButton = false;
       this.boolButton = false;
+
       this.afAuth.authState.subscribe(data => {
         this.profileData = this.afDatabase.object(`profile/${data.uid}`, {preserveSnapshot: true});
         this.profileData.subscribe(data => {
@@ -42,6 +45,7 @@ export class PerfilPage {
 
   }
   ionViewWillLoad(){
+
   this.afAuth.authState.take(1).subscribe(data =>{
     this.profileData = this.afDatabase.object(`profile/${data.uid}`)
     //subscribe obtiene info más especifica
@@ -67,6 +71,8 @@ export class PerfilPage {
     this.lastName = data.val().lastName;
     this.phoneNumber = data.val().phoneNumber;
     this.skypeUser = data.val().skypeUser;
+    this.ciudad = data.val().ciudad;
+    this.profesion = data.val().profesion;
   }
   notify(event)
     {
@@ -79,12 +85,12 @@ export class PerfilPage {
       else{
         this.disponible=false;
         this.afAuth.authState.take(1).subscribe(auth => {
-          this.profile.boolLogin = true;
           this.afDatabase.object(`profile/${auth.uid}/disponible`).set(false);
         });
-
       }
     }
+
+
     getDisponible(){
       return !this.disponible;
     }
@@ -107,7 +113,9 @@ export class PerfilPage {
     this.boolButton2 = false;
     this.boolButton = true;
   }
+  //mirar como conservar asignaturas luego de haberlas guardado
   showCheckbox() {
+
     let alert = this.alertCtrl.create();
     alert.setTitle('¿En que asignaturas puedes ofrecer asesoría?');
 
