@@ -24,9 +24,9 @@ export class BuscarTutorPage {
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase
   ) {
     this.asignatura=this.navParams.get("asignatura");
-    this.tutores = this.afDatabase.list(`profile`,{
+    this.tutores = this.afDatabase.list(`asignaturas`,{
       query:{
-        orderByChild: 'disponible',
+        orderByChild: 'algebra',
         equalTo: true
       }
     });

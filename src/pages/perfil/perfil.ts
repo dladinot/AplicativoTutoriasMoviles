@@ -27,6 +27,10 @@ export class PerfilPage {
   testCheckboxOpen: boolean;
   testCheckboxResult;
   public disponible: boolean;
+  asignaturasDisponibles: Array<string>;
+  asignaturasNoDisponibles: Array<string>=new Array();
+  userID:string;
+
 
   constructor(private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
     public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams) {
@@ -35,6 +39,7 @@ export class PerfilPage {
       this.boolButton = false;
 
       this.afAuth.authState.subscribe(data => {
+
         this.profileData = this.afDatabase.object(`profile/${data.uid}`, {preserveSnapshot: true});
         this.profileData.subscribe(data => {
           this.setData(data);
@@ -47,6 +52,7 @@ export class PerfilPage {
   ionViewWillLoad(){
 
   this.afAuth.authState.take(1).subscribe(data =>{
+    this.userID=data.uid;
     this.profileData = this.afDatabase.object(`profile/${data.uid}`)
     //subscribe obtiene info más especifica
     this.profileData.subscribe(snapshot => {
@@ -64,6 +70,7 @@ export class PerfilPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilPage');
+    console.log(this.asignaturasDisponibles);
   }
 
   setData(data) {
@@ -73,6 +80,8 @@ export class PerfilPage {
     this.skypeUser = data.val().skypeUser;
     this.ciudad = data.val().ciudad;
     this.profesion = data.val().profesion;
+    this.asignaturasDisponibles=data.val().asignaturas;
+    console.log("asignaturas disponibles:"+this.asignaturasDisponibles);
   }
   notify(event)
     {
@@ -113,6 +122,14 @@ export class PerfilPage {
     this.boolButton2 = false;
     this.boolButton = true;
   }
+
+  prueba(){
+    this.afAuth.authState.take(1).subscribe(auth => {
+
+      this.afDatabase.object('asignaturas/algebra/'+this.userID).remove();
+
+    });
+  }
   //mirar como conservar asignaturas luego de haberlas guardado
   showCheckbox() {
 
@@ -123,7 +140,7 @@ export class PerfilPage {
       type: 'checkbox',
       label: 'Algebra',
       value: 'algebra',
-      checked: true
+
     });
 
     alert.addInput({
@@ -193,16 +210,63 @@ export class PerfilPage {
     });
 
     alert.addButton('Cancelar');
+
+    if(this.asignaturasDisponibles!=null){
+
+
+        let siguiente=0;
+        for(let asignatura of alert.data.inputs){
+          if(asignatura.value==this.asignaturasDisponibles[siguiente]){
+            asignatura.checked=true;
+            siguiente=siguiente+1;
+          }
+
+        }
+      }
+    //console.log(alert.data.inputs);
     alert.addButton({
       text: 'Confirmar',
       handler: data => {
         console.log('Checkbox data:', data);
-        //destruye la vista actual y toca volver a cargarla
+
+        for(let asignatura of alert.data.inputs){
+          if(asignatura.checked==false){
+            this.asignaturasNoDisponibles.push(asignatura.value);
+          }
+        }
+        console.log("asignaturas no disp"+this.asignaturasNoDisponibles);
+        //console.log(this.asignaturasDisponibles.indexOf("programacion") > -1);
+
+        if(this.asignaturasDisponibles!=null){
+            let siguiente=0;
+            for(let asignatura of this.asignaturasNoDisponibles){
+
+              if(this.asignaturasDisponibles.indexOf(this.asignaturasNoDisponibles[siguiente])>-1){
+                console.log("Se ha removido: "+this.asignaturasNoDisponibles[siguiente]);
+
+                this.afDatabase.object('asignaturas/'+this.asignaturasNoDisponibles[siguiente]+'/'+this.userID).remove();
+                console.log("Se ha removido: "+this.asignaturasNoDisponibles[siguiente]);
+
+              }
+              siguiente=siguiente+1;
+
+            }
+        }
+
         this.afAuth.authState.take(1).subscribe(auth => {
+
+          for(let asignatura of data){
+
+            this.afDatabase.object('asignaturas/'+asignatura).update({[auth.uid]:true});
+
+
+          }
           this.afDatabase.object(`profile/${auth.uid}/asignaturas`).set(data);
+
         });
         this.testCheckboxOpen = false;
         this.testCheckboxResult = data;
+        this.asignaturasNoDisponibles=[];
       }
     });
     alert.present();
