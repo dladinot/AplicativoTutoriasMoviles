@@ -32,6 +32,7 @@ export class PerfilPage {
   userID:string;
 
 
+
   constructor(private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
     public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams) {
       this.boolInputs = true;
@@ -57,6 +58,7 @@ export class PerfilPage {
     //subscribe obtiene info más especifica
     this.profileData.subscribe(snapshot => {
 
+      console.log(snapshot);
       this.disponible=snapshot.disponible;
 
     });
