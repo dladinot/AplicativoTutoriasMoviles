@@ -21,7 +21,7 @@
     </p>
     <ion-item>
       <ion-label>Asignatura</ion-label>
-      <ion-select [(ngModel)]="asignatura">
+      <ion-select (ionChange)="habilitarBoton($event)" [(ngModel)]="asignatura">
         <ion-option value="algebra">Álgebra</ion-option>
         <ion-option value="trigonometria">Trigonometría</ion-option>
         <ion-option value="programacion">Programación</ion-option>
@@ -38,7 +38,7 @@
     </ion-item>
 
     <div text-center>
-    <button ion-button round (click)="buscarTutor()">Buscar tutor</button>
+    <button ion-button [disabled]="getbotonActivado()" round (click)="buscarTutor()">Buscar tutor</button>
     </div>
 
 </ion-content>

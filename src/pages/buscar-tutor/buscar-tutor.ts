@@ -20,49 +20,53 @@ export class BuscarTutorPage {
   asignatura: string;
   public tutores: FirebaseObjectObservable<any>;
   public consultaTutor: FirebaseObjectObservable<any>;
+  public infoTutores=[];
+  //public listaTutores: FirebaseListObservable<any>;
   public listaTutores=[];
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private afAuth: AngularFireAuth, private afDatabase:AngularFireDatabase
   ) {
     this.asignatura=this.navParams.get("asignatura");
-    /*this.tutores = this.afDatabase.list(`profile`,{
+/*
+    this.listaTutores = this.afDatabase.list(`profile`,{
       query:{
         orderByChild: 'disponible',
         equalTo: true
       }
     });
-    */
+    this.listaTutores.subscribe(snapshot=>{
+        console.log(snapshot);
+    })
 
-
+*/
 
   }
   ionViewWillLoad(){
-
+  //Hay bug cuando se actualiza la información en tiempo real
   this.afAuth.authState.take(1).subscribe(data =>{
-    this.tutores = this.afDatabase.object(`asignaturas/${this.asignatura}`, {preserveSnapshot: true})
+    this.tutores = this.afDatabase.object(`asignaturas/${this.asignatura}`, {preserveSnapshot: true});
     this.tutores.subscribe(snapshots => {
         snapshots.forEach(snapshot=>{
-          this.consultaTutor=this.afDatabase.object(`profile/SlHGkc3ZK0hHxH2s1sowpgGuJfA3`, {preserveSnapshot: true})
+          console.log(snapshot.key);
+          var padre=snapshot.key;
+          this.consultaTutor=this.afDatabase.object(`profile/${snapshot.key}`, {preserveSnapshot: true});
           this.consultaTutor.subscribe(info=>{
             info.forEach(childSnapshot=>{
-
-              var item = childSnapshot.val();
-              item.key=childSnapshot.key;
-              console.log(childSnapshot.key);
-              this.listaTutores.push(item);      
+              var value=childSnapshot.val();
+              var key = childSnapshot.key;
+              this.infoTutores[key]=value;
             })
-
+            this.listaTutores.push(this.infoTutores);
             console.log(this.listaTutores);
           })
-          console.log(snapshot.key);
+
           //this.afDatabase.object(`profile/${snapshot.key}`);
 
         })
     });
 
   })
-
 
 }
 
